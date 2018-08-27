@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+{% block body %}
+                     
+    
+{% if articles %}
+
+<div class="container">
+
+    <div class="" style="float:right">
+                    
+            <!-- Search Widget -->
+            <div class="card my-4">
+              <h5 class="card-header">Makale arayın</h5>
+              <div class="card-body">
+                    
+                        <form class="input-group">
+                                {% csrf_token %}
+                                <input type="text" name="keyword" class="form-control" maxlength="10" placeholder="Ara...">
+                                <button type="submit" class="btn btn-primary">Ara</button>
+                            </form>   
+                </div>
+            </div>
+          </div>
+  
+    <div class="row"> 
+
+{% for article in articles %}
+    <!-- Page Content -->
+  
+    
+      
+              <!-- Blog Entries Column -->
+              <div class="col-md-12">
+      
+                <!-- Blog Post -->
+                <div class="card mb-4">
+                  <img class="card-img-top" src="{{article.article_image.url}}" alt="">
+                  <div class="card-body">
+                   <a href="{% url 'article:detail' article.id  %}"><h2 class="card-title">{{article.title}}</h2></a> 
+                    <p class="card-text">{{article.content|safe|truncatewords:50}}</p>
+                    <a href="{% url 'article:detail' article.id  %}" class="btn btn-primary" style="float:right">Devamını Oku &rarr;</a>
+                  </div>
+                  <div class="card-footer text-muted">
+                    <p>{{article.author.username}} tarafından  {{article.created_date}}'da oluşturuldu.</p>
+                  </div>
+                </div>
+                <br><br>
+              </div>
+              
+              {% endfor %}
+                <!-- Sidebar Widgets Column -->
+                
+               
+           
+    
+            </div>
+            <!-- /.row -->
+
+            <footer class="py-5 bg-dark">
+                            <div class="container">
+                              <p class="m-0 text-center text-white">Copyright &copy; MMBrothers App 2018</p>
+                            </div>
+                            <!-- /.container -->
+                          </footer>
+      
+          </div>
+          <!-- /.container -->
+    
+
+          
+
+
+
+{% else %}
+
+<div class="container">
+    <h3>Makaleler</h3>
+    <hr>
+    <div class="col-md-3" style="float:right">
+        <br><br>            
+            <!-- Search Widget -->
+            <div class="card my-4">
+              <h5 class="card-header">Makale arayın</h5>
+              <div class="card-body">
+                    
+                        <form class="input-group">
+                                {% csrf_token %}
+                                <input type="text" name="keyword" class="form-control" maxlength="10" placeholder="Ara...">
+                                <button type="submit" class="btn btn-primary">Ara</button>
+                            </form>   
+                </div>
+            </div>
+             
+          </div>
+ 
+
+<div class="alert alert-danger">
+    Makale bulunamadı.
+</div>
+<br><br><br><br><br><br><br>
+<footer class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">Copyright &copy; MMBrothers App 2018</p>
+  </div>
+  <!-- /.container -->
+</footer>
+
+</div>
+
+{% endif %}
+
+{% endblock body %}
